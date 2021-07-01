@@ -5,9 +5,9 @@
 
 [sub_resource type="CylinderMesh" id=1]
 
-[sub_resource type="CubeMesh" id=3]
+[sub_resource type="CubeMesh" id=2]
 
-[sub_resource type="CylinderShape" id=2]
+[sub_resource type="CylinderShape" id=3]
 
 [node name="Player" type="KinematicBody"]
 collision_mask = 6
@@ -20,16 +20,13 @@ mesh = SubResource( 1 )
 material/0 = null
 
 [node name="MeshInstance2" type="MeshInstance" parent="Pivot"]
-transform = Transform( -4.37114e-008, 0, 0.1, 0, 0.1, 0, -1, 0, -4.37114e-009, 0.236864, 0.787365, -1.85087 )
-mesh = SubResource( 3 )
+transform = Transform( -4.37114e-08, 0, 0.1, 0, 0.1, 0, -1, 0, -4.37114e-09, 0.236864, 0.787365, -1.85087 )
+mesh = SubResource( 2 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
-[node name="x-gimbal" type="Position3D" parent="."]
+[node name="Camera" type="Camera" parent="."]
 script = ExtResource( 2 )
-
-[node name="y-gimbal" type="Spatial" parent="x-gimbal"]
-
-[node name="Camera" type="Camera" parent="x-gimbal/y-gimbal"]
+SENSITIVITY = 2.0
