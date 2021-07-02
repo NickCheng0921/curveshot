@@ -9,7 +9,7 @@ export var SENSITIVITY := 2
 export var SMOOTHNESS := 10.0
 
 onready var camera = $Camera
-onready var Pivot = $Pivot
+#onready var Pivot = $Pivot
 var camera_input : Vector2
 var rotation_velocity : Vector2
 var y_rotation = 0
@@ -27,10 +27,16 @@ func _input(event):
 
 #called every frame
 var i := 1
+var y_axis := Vector3(0, 1, 0)
+var global_y_degree := 0.0
 func _physics_process(delta):
+	if(i >= 40):
+		i = 0
+	else:
+		i += 1
 	# We create a local variable to store the input direction.
 	var direction = Vector3.ZERO
-	var global_y_degree = deg2rad(global_transform.basis.get_euler()[1])
+	global_y_degree = (global_transform.basis.get_euler()[1])
 	
 	# We check for each move input and update the direction accordingly.
 	if Input.is_action_pressed("move_right"):
@@ -66,10 +72,6 @@ func _physics_process(delta):
 	# Moving the character
 	if is_on_floor() and Input.is_action_just_pressed("jump"):
 		velocity.y += jump_impulse
-	#print("velocity: ", velocity)
-	print(velocity.x, " ", velocity.z)
-	velocity.x *= -cos(global_y_degree)
-	velocity.z *= sin(global_y_degree)
-	print("    ", velocity.x, " ", velocity.z)
+	velocity = velocity.rotated(y_axis, global_y_degree)
 	velocity = move_and_slide(velocity, Vector3.UP)
 	
