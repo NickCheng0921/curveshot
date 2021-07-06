@@ -30,6 +30,7 @@ var i := 1
 var y_axis := Vector3(0, 1, 0)
 var global_y_degree := 0.0
 func _physics_process(delta):
+	#debugging to print every ~sec
 	if(i >= 40):
 		i = 0
 	else:
@@ -49,7 +50,9 @@ func _physics_process(delta):
 		direction.z += 1
 	if Input.is_action_pressed("move_forward"):
 		direction.z -= 1
-		
+	if Input.is_action_just_pressed("Shoot"):
+		print("Shot")
+	
 	if direction != Vector3.ZERO:
 		direction = direction.normalized()
 		#$Pivot.look_at(translation + direction, Vector3.UP) 
@@ -61,7 +64,7 @@ func _physics_process(delta):
 	rotation_degrees.y += y_rotation #move mesh
 	
 	# Clamp vertical rotation
-	rotation_degrees.x = clamp(rotation_degrees.x, -90, 90)
+	rotation_degrees.x = clamp(rotation_degrees.x, deg2rad(-90), deg2rad(90))
 	camera_input = Vector2.ZERO
 
 	# Ground velocity
