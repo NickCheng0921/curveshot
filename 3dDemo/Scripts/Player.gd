@@ -5,16 +5,23 @@ export var speed = 14
 # The downward acceleration when in the air, in meters per second squared.
 export var fall_acceleration = 75
 export var jump_impulse = 20
+#camera controls
 export var SENSITIVITY := 2
 export var SMOOTHNESS := 10.0
+#bullet global variables
+export var bullet_velocity = Vector3(200, 0, 0)
 
+onready var bullet = preload("res://Scenes/Bullet.tscn")
+onready var barrel_point = $"Pivot/MeshInstance2/barrel point"
+onready var player = $"."
 onready var camera = $Camera
-#onready var Pivot = $Pivot
+#Camera variables
 var camera_input : Vector2
 var rotation_velocity : Vector2
 var y_rotation = 0
 
 var velocity = Vector3.ZERO
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -31,10 +38,11 @@ var y_axis := Vector3(0, 1, 0)
 var global_y_degree := 0.0
 func _physics_process(delta):
 	#debugging to print every ~sec
-	if(i >= 40):
+	if(i >= 60):
 		i = 0
 	else:
 		i += 1
+
 	# We create a local variable to store the input direction.
 	var direction = Vector3.ZERO
 	global_y_degree = (global_transform.basis.get_euler()[1])
@@ -51,7 +59,11 @@ func _physics_process(delta):
 	if Input.is_action_pressed("move_forward"):
 		direction.z -= 1
 	if Input.is_action_just_pressed("Shoot"):
-		print("Shot")
+		var bullet_instance = bullet.instance()
+		bullet_instance.velocity = bullet_velocity
+		get_tree().get_root().add_child(bullet_instance)
+		bullet_instance.global_transform.origin = barrel_point.global_transform.origin
+
 	
 	if direction != Vector3.ZERO:
 		direction = direction.normalized()
