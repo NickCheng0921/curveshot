@@ -9,7 +9,8 @@ export var jump_impulse = 20
 export var SENSITIVITY := 2
 export var SMOOTHNESS := 10.0
 #bullet global variables
-export var bullet_velocity = Vector3(200, 0, 0)
+export var bullet_velocity = 150
+var bullet_velocity_vec := Vector3(1, 0, 0)
 
 onready var bullet = preload("res://Scenes/Bullet.tscn")
 onready var barrel_point = $"Pivot/MeshInstance2/barrel point"
@@ -35,7 +36,9 @@ func _input(event):
 #called every frame
 var i := 1
 var y_axis := Vector3(0, 1, 0)
+var x_axis := Vector3(-1, 0, 0)
 var global_y_degree := 0.0
+var camera_x_tilt := 0.0
 func _physics_process(delta):
 	#debugging to print every ~sec
 	if(i >= 60):
@@ -60,14 +63,18 @@ func _physics_process(delta):
 		direction.z -= 1
 	if Input.is_action_just_pressed("Shoot"):
 		var bullet_instance = bullet.instance()
-		bullet_instance.velocity = bullet_velocity
+		#camera_x_tilt = camera.global_transform.basis.get_euler()[0]
+		bullet_velocity_vec = Vector3(1, 0, 0)
+		bullet_velocity_vec = bullet_velocity_vec.rotated(y_axis, global_y_degree+PI/2) * bullet_velocity
+		#bullet_velocity_vec = bullet_velocity_vec.rotated(x_axis, camera_x_tilt)
+		#bullet_velocity_vec[1] *= bullet_velocity
+		bullet_instance.velocity = bullet_velocity_vec
 		get_tree().get_root().add_child(bullet_instance)
 		bullet_instance.global_transform.origin = barrel_point.global_transform.origin
 
 	
 	if direction != Vector3.ZERO:
 		direction = direction.normalized()
-		#$Pivot.look_at(translation + direction, Vector3.UP) 
 
 	#mouse based rotation
 	rotation_velocity = rotation_velocity.linear_interpolate(camera_input * SENSITIVITY, delta * SMOOTHNESS)

@@ -24,7 +24,7 @@ mesh = SubResource( 2 )
 material/0 = null
 
 [node name="barrel point" type="Position3D" parent="Pivot/MeshInstance2"]
-transform = Transform( 1, 0, 1.33227e-015, 0, 1, 0, 0, 0, 1, 1.26516, 0, 1.66893e-006 )
+transform = Transform( 1, 0, 1.77636e-015, 0, 0.999999, 0, 0, 0, 0.999999, 1.26516, -6.54674, 2.14577e-006 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 3 )

@@ -45,14 +45,14 @@ mesh = SubResource( 3 )
 material/0 = null
 
 [node name="Coliision +x" type="CollisionShape" parent="Walls"]
-transform = Transform( 1, 0, 0, 0, 5, 0, 0, 0, 15, 15, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 5, 0, 0, 0, 15, 16, 0, 0 )
 shape = SubResource( 4 )
 
 [node name="Wall -x" type="MeshInstance" parent="Walls"]
-transform = Transform( 1, 0, 0, 0, 5, 0, 0, 0, 16, -15, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 5, 0, 0, 0, 15, -15, 0, 0 )
 mesh = SubResource( 5 )
 material/0 = null
 
 [node name="Collision -x" type="CollisionShape" parent="Walls"]
-transform = Transform( 1, 0, 0, 0, 5, 0, 0, 0, 15, -16, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 5, 0, 0, 0, 15, -15, 0, 0 )
 shape = SubResource( 6 )
