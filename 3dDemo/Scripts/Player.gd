@@ -9,7 +9,7 @@ export var jump_impulse = 20
 export var SENSITIVITY := 2
 export var SMOOTHNESS := 10.0
 #bullet global variables
-export var bullet_velocity = 150
+export var bullet_velocity = 100
 var bullet_velocity_vec := Vector3(1, 0, 0)
 
 onready var bullet = preload("res://Scenes/Bullet.tscn")
@@ -69,7 +69,7 @@ func _physics_process(delta):
 		#bullet_velocity_vec = bullet_velocity_vec.rotated(x_axis, camera_x_tilt)
 		#bullet_velocity_vec[1] *= bullet_velocity
 		bullet_instance.velocity = bullet_velocity_vec
-		get_tree().get_root().add_child(bullet_instance)
+		get_tree().get_root().get_node("Main/Bullets").add_child(bullet_instance)
 		bullet_instance.global_transform.origin = barrel_point.global_transform.origin
 
 	
