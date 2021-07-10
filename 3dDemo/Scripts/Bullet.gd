@@ -1,8 +1,6 @@
 extends KinematicBody
 
 var velocity := Vector3()
-onready var can_change_direction_y := true #once bullet enters a grav_node's range, pick ccw or cw rotations
-onready var curve_y_ccw = true #by default, from a top view, turn ccw
 export var lifespan = 2
 
 # Called when the node enters the scene tree for the first time.
