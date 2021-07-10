@@ -13,7 +13,7 @@ export var bullet_velocity = 10
 var bullet_velocity_vec := Vector3(1, 0, 0)
 
 onready var bullet = preload("res://Scenes/Bullet.tscn")
-onready var barrel_point = $"Pivot/MeshInstance2/barrel point"
+onready var barrel_point = $"Camera/barrel point"
 onready var player = $"."
 onready var camera = $Camera
 #Camera variables
@@ -66,6 +66,11 @@ func _physics_process(delta):
 		#camera_x_tilt = camera.global_transform.basis.get_euler()[0]
 		bullet_velocity_vec = Vector3(1, 0, 0)
 		bullet_velocity_vec = bullet_velocity_vec.rotated(y_axis, global_y_degree+PI/2) * bullet_velocity
+		
+		#bullet_velocity_vec[2] = bullet_velocity_vec[2]*2
+
+		print("bullet_velocity_vec is ",bullet_velocity_vec)
+		
 		#bullet_velocity_vec = bullet_velocity_vec.rotated(x_axis, camera_x_tilt)
 		#bullet_velocity_vec[1] *= bullet_velocity
 		bullet_instance.velocity = bullet_velocity_vec
