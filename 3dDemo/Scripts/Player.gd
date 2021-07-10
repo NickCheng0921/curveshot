@@ -9,7 +9,7 @@ export var jump_impulse = 20
 export var SENSITIVITY := 2
 export var SMOOTHNESS := 10.0
 #bullet global variables
-export var bullet_velocity = 100
+export var bullet_velocity = 10
 var bullet_velocity_vec := Vector3(1, 0, 0)
 
 onready var bullet = preload("res://Scenes/Bullet.tscn")
