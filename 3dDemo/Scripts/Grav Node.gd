@@ -1,8 +1,8 @@
 extends StaticBody
 
 #refer to grav_node.png in res://Images for basic explanation, image may be outdated
-export var zone_length := 3 #sensitivity of core on when it acts on projectile
-export var gravity := 2 #strength of force on bullet
+export var zone_length := 2 #sensitivity of core on when it acts on projectile
+export var gravity := 10 #strength of force on bullet
 onready var bullets
 onready var i := 0
 onready var grav_node = $"."

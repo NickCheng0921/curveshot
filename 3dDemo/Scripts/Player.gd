@@ -67,8 +67,9 @@ func _physics_process(delta):
 		var camera_degrees = camera.global_transform.basis.get_euler()
 
 		bullet_velocity_vec = Vector3(0, 0, -1) #forward is -z direction, since I set it up that way
-		bullet_velocity_vec = bullet_velocity_vec.rotated(y_axis, camera_degrees[1]) #account for left and right
 		bullet_velocity_vec = bullet_velocity_vec.rotated(x_axis, camera_degrees[0]) #account for up and down
+		bullet_velocity_vec = bullet_velocity_vec.rotated(y_axis, camera_degrees[1]) #account for left and right
+
 		bullet_velocity_vec *= bullet_velocity
 		bullet_instance.velocity = bullet_velocity_vec #give the bullet it's initial velocity and spawn at barrel
 		get_tree().get_root().get_node("Main/Bullets").add_child(bullet_instance)
