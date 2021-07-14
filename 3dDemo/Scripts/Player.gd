@@ -9,11 +9,11 @@ export var jump_impulse = 20
 export var SENSITIVITY := 2
 export var SMOOTHNESS := 10.0
 #bullet global variables
-export var bullet_velocity = 10
+export var bullet_velocity = 50
 var bullet_velocity_vec := Vector3(1, 0, 0)
 
 onready var bullet = preload("res://Scenes/Bullet.tscn")
-onready var barrel_point = $"Pivot/MeshInstance2/barrel point"
+onready var barrel_point = $"Camera//barrel point"
 onready var player = $"."
 onready var camera = $Camera
 #Camera variables
@@ -36,12 +36,13 @@ func _input(event):
 #called every frame
 var i := 1
 var y_axis := Vector3(0, 1, 0)
-var x_axis := Vector3(-1, 0, 0)
+var x_axis := Vector3(1, 0, 0)
+var z_axis := Vector3(0, 0, 1)
 var global_y_degree := 0.0
 var camera_x_tilt := 0.0
 func _physics_process(delta):
 	#debugging to print every ~sec
-	if(i >= 60):
+	if(i >= 40):
 		i = 0
 	else:
 		i += 1
@@ -62,28 +63,30 @@ func _physics_process(delta):
 	if Input.is_action_pressed("move_forward"):
 		direction.z -= 1
 	if Input.is_action_just_pressed("Shoot"):
-		var bullet_instance = bullet.instance()
-		#camera_x_tilt = camera.global_transform.basis.get_euler()[0]
-		bullet_velocity_vec = Vector3(1, 0, 0)
-		bullet_velocity_vec = bullet_velocity_vec.rotated(y_axis, global_y_degree+PI/2) * bullet_velocity
-		#bullet_velocity_vec = bullet_velocity_vec.rotated(x_axis, camera_x_tilt)
-		#bullet_velocity_vec[1] *= bullet_velocity
-		bullet_instance.velocity = bullet_velocity_vec
+		var bullet_instance = bullet.instance() #get class to instance a bullet object
+		var camera_degrees = camera.global_transform.basis.get_euler()
+
+		bullet_velocity_vec = Vector3(0, 0, -1) #forward is -z direction, since I set it up that way
+		bullet_velocity_vec = bullet_velocity_vec.rotated(x_axis, camera_degrees[0]) #account for up and down
+		bullet_velocity_vec = bullet_velocity_vec.rotated(y_axis, camera_degrees[1]) #account for left and right
+
+		bullet_velocity_vec *= bullet_velocity
+		bullet_instance.velocity = bullet_velocity_vec #give the bullet it's initial velocity and spawn at barrel
 		get_tree().get_root().get_node("Main/Bullets").add_child(bullet_instance)
 		bullet_instance.global_transform.origin = barrel_point.global_transform.origin
 
-	
 	if direction != Vector3.ZERO:
 		direction = direction.normalized()
 
 	#mouse based rotation
 	rotation_velocity = rotation_velocity.linear_interpolate(camera_input * SENSITIVITY, delta * SMOOTHNESS)
+	# Clamp vertical rotation
+	rotation_degrees.x = clamp(rotation_degrees.x, deg2rad(-90), deg2rad(90))
+	
 	camera.rotation_degrees.x += -deg2rad(rotation_velocity.y)
 	y_rotation = -deg2rad(rotation_velocity.x)
 	rotation_degrees.y += y_rotation #move mesh
 	
-	# Clamp vertical rotation
-	rotation_degrees.x = clamp(rotation_degrees.x, deg2rad(-90), deg2rad(90))
 	camera_input = Vector2.ZERO
 
 	# Ground velocity
