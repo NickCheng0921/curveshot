@@ -49,7 +49,6 @@ shadow_enabled = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.15772, 0 )
 
 [node name="Walls" type="StaticBody" parent="."]
-editor/display_folded = true
 
 [node name="Wall +x" type="MeshInstance" parent="Walls"]
 transform = Transform( 1, 0, 0, 0, 5, 0, 0, 0, 15, 16, 0, 0 )
