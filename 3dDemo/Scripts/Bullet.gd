@@ -16,4 +16,7 @@ func kill():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	velocity = move_and_slide(velocity, Vector3.UP)
+	var collision_info = move_and_slide(velocity, Vector3.UP)
+	if get_slide_count() > 0:
+		#print(get_slide_collision(0).collider.get_name())
+		queue_free()

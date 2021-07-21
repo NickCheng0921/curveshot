@@ -3,9 +3,7 @@
 [ext_resource path="res://Materials/example_material.tres" type="Material" id=1]
 [ext_resource path="res://Scenes/Grav Node.tscn" type="PackedScene" id=2]
 
-[sub_resource type="BoxShape" id=6]
-
-[sub_resource type="CubeMesh" id=1]
+[sub_resource type="BoxShape" id=1]
 
 [sub_resource type="CubeMesh" id=2]
 
@@ -14,6 +12,8 @@
 [sub_resource type="CubeMesh" id=4]
 
 [sub_resource type="CubeMesh" id=5]
+
+[sub_resource type="CubeMesh" id=6]
 
 [sub_resource type="BoxShape" id=7]
 
@@ -36,11 +36,11 @@ collision_mask = 0
 
 [node name="temple floor cs" type="CollisionShape" parent="floors"]
 transform = Transform( 40, 0, 0, 0, 0.5, 0, 0, 0, 40, 0, 0, 0 )
-shape = SubResource( 6 )
+shape = SubResource( 1 )
 
 [node name="temple floor" type="MeshInstance" parent="floors"]
 transform = Transform( 30, 0, 0, 0, 0.5, 0, 0, 0, 30, 0, 0, 0 )
-mesh = SubResource( 1 )
+mesh = SubResource( 2 )
 material/0 = ExtResource( 1 )
 
 [node name="walls" type="StaticBody" parent="."]
@@ -50,22 +50,22 @@ collision_mask = 0
 
 [node name="+x wall" type="MeshInstance" parent="walls"]
 transform = Transform( 1, 0, 0, 0, 29, 0, 0, 0, 30, 30, 20, 0 )
-mesh = SubResource( 2 )
+mesh = SubResource( 3 )
 material/0 = ExtResource( 1 )
 
 [node name="-x wall" type="MeshInstance" parent="walls"]
 transform = Transform( 1, 0, 0, 0, 29, 0, 0, 0, 30, -30, 29, 0 )
-mesh = SubResource( 3 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 1 )
 
 [node name="+z wall" type="MeshInstance" parent="walls"]
 transform = Transform( 30, 0, 0, 0, 20, 0, 0, 0, 1, 0, 20, 30 )
-mesh = SubResource( 4 )
+mesh = SubResource( 5 )
 material/0 = ExtResource( 1 )
 
 [node name="-z wall" type="MeshInstance" parent="walls"]
 transform = Transform( 30, 0, 0, 0, 20, 0, 0, 0, 1, 0, 20, -30 )
-mesh = SubResource( 5 )
+mesh = SubResource( 6 )
 material/0 = ExtResource( 1 )
 
 [node name="+x wall cs" type="CollisionShape" parent="walls"]
