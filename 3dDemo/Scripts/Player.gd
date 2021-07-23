@@ -6,7 +6,7 @@ export var speed = 14
 export var fall_acceleration = 75
 export var jump_impulse = 20
 #camera controls
-export var SENSITIVITY := 2
+export var SENSITIVITY := 2.0
 export var SMOOTHNESS := 10.0
 #bullet global variables
 export var bullet_velocity = 50
@@ -90,17 +90,6 @@ func _physics_process(delta):
 	if direction != Vector3.ZERO:
 		direction = direction.normalized()
 
-	#mouse based rotation
-	rotation_velocity = rotation_velocity.linear_interpolate(camera_input * SENSITIVITY, delta * SMOOTHNESS)
-	# Clamp vertical rotation
-	rotation_degrees.x = clamp(rotation_degrees.x, deg2rad(-90), deg2rad(90))
-	
-	camera.rotation_degrees.x += -deg2rad(rotation_velocity.y)
-	y_rotation = -deg2rad(rotation_velocity.x)
-	rotation_degrees.y += y_rotation #move mesh
-	
-	camera_input = Vector2.ZERO
-
 	# Ground velocity
 	velocity.x = direction.x * speed
 	velocity.z = direction.z * speed
@@ -114,3 +103,16 @@ func _physics_process(delta):
 
 func shoot_timeout():
 	can_shoot = true
+	
+func _process(delta):
+	#mouse based rotation
+	rotation_velocity = rotation_velocity.linear_interpolate(camera_input * SENSITIVITY, 1 - (delta * SMOOTHNESS))
+	# Clamp vertical rotation
+	camera.rotation_degrees.x += -rotation_velocity.y*delta
+	camera.rotation_degrees.x = clamp(camera.rotation_degrees.x, -90, 90)
+	
+	# Horizontally Rotate mesh
+	rotation_degrees.y += -rotation_velocity.x*delta 
+	
+	camera_input = Vector2.ZERO
+
