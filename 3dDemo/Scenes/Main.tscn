@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Temple.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Target.tscn" type="PackedScene" id=3]
 
 [node name="Main" type="Node"]
 
@@ -11,3 +12,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.15772, 0 )
 [node name="Bullets" type="Node" parent="."]
 
 [node name="Temple" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.396156, -0.102676, 0.25643 )
+
+[node name="Targets" type="Spatial" parent="."]
+
+[node name="main target" parent="Targets" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.2805, 0 )

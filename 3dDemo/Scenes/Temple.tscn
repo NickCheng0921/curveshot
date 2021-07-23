@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Materials/example_material.tres" type="Material" id=1]
 [ext_resource path="res://Scenes/Grav Node.tscn" type="PackedScene" id=2]
@@ -26,6 +26,10 @@
 [sub_resource type="CubeMesh" id=11]
 
 [sub_resource type="CubeMesh" id=12]
+
+[sub_resource type="BoxShape" id=13]
+
+[sub_resource type="BoxShape" id=14]
 
 [node name="Temple" type="Spatial"]
 
@@ -85,7 +89,8 @@ transform = Transform( 30, 0, 0, 0, 20, 0, 0, 0, 1, 0, 20, -30 )
 shape = SubResource( 10 )
 
 [node name="roof" type="StaticBody" parent="."]
-editor/display_folded = true
+collision_layer = 4
+collision_mask = 0
 
 [node name="roof -x" type="MeshInstance" parent="roof"]
 transform = Transform( 18.7939, -0.34202, 0, 6.8404, 0.939693, 0, 0, 0, 30, -10, 35, 0 )
@@ -96,6 +101,14 @@ material/0 = null
 transform = Transform( 18.7939, 0.34202, 0, -6.8404, 0.939693, 0, 0, 0, 30, 10, 35, 0 )
 mesh = SubResource( 12 )
 material/0 = null
+
+[node name="roof -x cs" type="CollisionShape" parent="roof"]
+transform = Transform( 18.7939, -0.34202, 0, 6.8404, 0.939693, 0, 0, 0, 30, -10, 35, 0 )
+shape = SubResource( 13 )
+
+[node name="roof +x cs" type="CollisionShape" parent="roof"]
+transform = Transform( 18.7939, 0.34202, 0, -6.8404, 0.939693, 0, 0, 0, 30, 10, 35, 0 )
+shape = SubResource( 14 )
 
 [node name="GravNodes" type="Spatial" parent="."]
 editor/display_folded = true

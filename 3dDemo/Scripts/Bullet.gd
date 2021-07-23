@@ -2,6 +2,7 @@ extends KinematicBody
 
 var velocity := Vector3()
 export var lifespan = 3
+var primed := false #true if curved
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,5 +19,6 @@ func kill():
 func _process(delta):
 	var collision_info = move_and_slide(velocity, Vector3.UP)
 	if get_slide_count() > 0:
-		#print(get_slide_collision(0).collider.get_name())
+		if 'target' in get_slide_collision(0).collider.get_name() and primed:
+			get_slide_collision(0).collider.taco_bell()
 		queue_free()
