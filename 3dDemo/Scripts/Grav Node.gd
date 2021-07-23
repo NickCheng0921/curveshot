@@ -22,6 +22,7 @@ func _process(delta):
 		var distance = grav_node.global_transform.origin-bullet.global_transform.origin
 		#is bullet close enough to be curved?
 		if distance.length() < zone_length:
+			bullet.primed = true
 			distance = distance.normalized()
 			distance *= gravity
 			bullet.velocity += distance

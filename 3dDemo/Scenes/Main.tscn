@@ -1,52 +1,16 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Scenes/Grav Node.tscn" type="PackedScene" id=2]
-
-[sub_resource type="BoxShape" id=1]
-
-[sub_resource type="CubeMesh" id=2]
-
-[sub_resource type="CubeMesh" id=3]
-
-[sub_resource type="BoxShape" id=4]
-
-[sub_resource type="CubeMesh" id=5]
-
-[sub_resource type="BoxShape" id=6]
-
-[sub_resource type="CubeMesh" id=7]
-
-[sub_resource type="BoxShape" id=8]
-
-[sub_resource type="CubeMesh" id=9]
-
-[sub_resource type="BoxShape" id=10]
-
-[sub_resource type="BoxShape" id=11]
+[ext_resource path="res://Scenes/Temple.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Target.tscn" type="PackedScene" id=3]
 
 [node name="Main" type="Node"]
 
-[node name="Ground" type="StaticBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
-collision_layer = 4
-collision_mask = 0
-
-[node name="CollisionShape" type="CollisionShape" parent="Ground"]
-transform = Transform( 15, 0, 0, 0, 1, 0, 0, 0, 15, 0, 0, 0 )
-shape = SubResource( 1 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Ground"]
-transform = Transform( 15, 0, 0, 0, 1, 0, 0, 0, 15, 0.166799, 0.0166492, -0.0647087 )
-mesh = SubResource( 2 )
-material/0 = null
-
-[node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( 1, 0, 0, 0, -0.721973, 0.691921, 0, -0.691921, -0.721973, 0, 13.2975, 0 )
-shadow_enabled = true
-
 [node name="Player" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.15772, 0 )
+
+
+[node name="Bullets" type="Node" parent="."]
 
 [node name="Walls" type="StaticBody" parent="."]
 
@@ -86,11 +50,10 @@ material/0 = null
 transform = Transform( 15, 0, 0, 0, 5, 0, 0, 0, 1, 0, 0, -15 )
 shape = SubResource( 10 )
 
-[node name="floor" type="CollisionShape" parent="Walls"]
-transform = Transform( 20, 0, 0, 0, 1, 0, 0, 0, 20, 0, -0.8, 0 )
-shape = SubResource( 11 )
+[node name="Temple" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.396156, -0.102676, 0.25643 )
 
-[node name="Grav Node" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.43918, 1.79676, -5.06267 )
+[node name="Targets" type="Spatial" parent="."]
 
-[node name="Bullets" type="Node" parent="."]
+[node name="main target" parent="Targets" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.2805, 0 )

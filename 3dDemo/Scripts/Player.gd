@@ -20,12 +20,21 @@ onready var camera = $Camera
 var camera_input : Vector2
 var rotation_velocity : Vector2
 var y_rotation = 0
+var shoot_time_sec = .35
+var shoot_timer = null
+var can_shoot = true
 
 var velocity = Vector3.ZERO
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	shoot_timer = Timer.new()
+	shoot_timer.set_one_shot(true)
+	shoot_timer.set_wait_time(shoot_time_sec)
+	shoot_timer.connect("timeout", self, "shoot_timeout")
+	add_child(shoot_timer)
+	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _input(event):
@@ -62,7 +71,7 @@ func _physics_process(delta):
 		direction.z += 1
 	if Input.is_action_pressed("move_forward"):
 		direction.z -= 1
-	if Input.is_action_just_pressed("Shoot"):
+	if Input.is_action_just_pressed("Shoot") and can_shoot:
 		var bullet_instance = bullet.instance() #get class to instance a bullet object
 		var camera_degrees = camera.global_transform.basis.get_euler()
 
@@ -74,6 +83,9 @@ func _physics_process(delta):
 		bullet_instance.velocity = bullet_velocity_vec #give the bullet it's initial velocity and spawn at barrel
 		get_tree().get_root().get_node("Main/Bullets").add_child(bullet_instance)
 		bullet_instance.global_transform.origin = barrel_point.global_transform.origin
+		#start timer
+		can_shoot = false
+		shoot_timer.start()
 
 	if direction != Vector3.ZERO:
 		direction = direction.normalized()
@@ -88,6 +100,9 @@ func _physics_process(delta):
 		velocity.y += jump_impulse
 	velocity = velocity.rotated(y_axis, global_y_degree)
 	velocity = move_and_slide(velocity, Vector3.UP)
+
+func shoot_timeout():
+	can_shoot = true
 	
 func _process(delta):
 	#mouse based rotation
@@ -100,3 +115,4 @@ func _process(delta):
 	rotation_degrees.y += -rotation_velocity.x*delta 
 	
 	camera_input = Vector2.ZERO
+
